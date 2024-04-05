@@ -1,1 +1,74 @@
-<p>login works!</p>
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div [ngClass]="{'col-12 col-md-6 col-lg-6 custom-login': isSignUpClicked,'col-12 col-md-6 col-lg-4 custom-login': !isSignUpClicked}">
+        <div class="card bg-dark text-white" style="border-radius: 1rem">
+          <div class="card-body p-4">
+            <div class="mb-md-4 mt-md-3 pb-4">
+              <h2 *ngIf="!isSignUpClicked" class="fw-bold mb-2 text-uppercase text-center">
+                Login
+              </h2>
+              <h2 *ngIf="isSignUpClicked" class="fw-bold mb-2 text-uppercase text-center">
+                Register here
+              </h2>
+              <p *ngIf="!isSignUpClicked" class="text-white-50 mb-4 text-center">
+                Please enter your login and password!
+              </p>
+              <p *ngIf="isSignUpClicked" class="text-white-50 mb-4 text-center">
+                Please enter your Details!
+              </p>
+              <div class="row">
+                <div [ngClass]="{'col-md-12 mb-3': !isSignUpClicked, 'col-md-6 mb-3': isSignUpClicked}">
+                  <label class="form-label" for="typeEmailX">Email</label>
+                  <div class="form-outline form-white">
+                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
+                  </div>
+                </div>
+                <div *ngIf="isSignUpClicked" class="col-md-6 mb-3">
+                  <label class="form-label" for="typeName">Name</label>
+                  <div class="form-outline form-white">
+                    <input type="text" id="typeName" class="form-control form-control-lg" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div [ngClass]="{'col-md-12 mb-3': !isSignUpClicked, 'col-md-6 mb-3': isSignUpClicked}">
+                  <label class="form-label" for="typePasswordX">Password</label>
+                  <div class="form-outline form-white">
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  </div>
+                </div>
+                <div *ngIf="isSignUpClicked" class="col-md-6 mb-3">
+                  <label class="form-label" for="typePasswordX">Confirm Password</label>
+                  <div class="form-outline form-white">
+                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="small mb-3">
+              <a class="text-white-50" href="#!">Forgot password?</a>
+            </p>
+            <button *ngIf="!isSignUpClicked" class="btn btn-outline-light btn-lg px-4" type="submit">
+              Login
+            </button>
+            <button *ngIf="isSignUpClicked" class="btn btn-outline-light btn-lg px-4" type="submit">
+              Sign Up
+            </button>
+            <div>
+              <p *ngIf="!isSignUpClicked" class="small mt-3">
+                Don't have an account?
+                <a (click)="FormChangeClicked('signup')" style="cursor: pointer" class="text-white-50 fw-bold">Sign
+                  Up</a>
+              </p>
+              <p *ngIf="isSignUpClicked" class="small mt-3">
+                Already have an account?
+                <a (click)="FormChangeClicked('login')" style="cursor: pointer" class="text-white-50 fw-bold">Login</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
