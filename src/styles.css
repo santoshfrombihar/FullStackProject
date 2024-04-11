@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #5b5a5c;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(79, 78, 78), rgb(60, 60, 61));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(61, 60, 61), rgb(67, 67, 68))
+    }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

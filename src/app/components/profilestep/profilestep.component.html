@@ -1,0 +1,89 @@
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex">
+            <div class="container mt-5">
+                <div class="row justify-content-center  ">
+                    <div class="col-md-8">
+                        <div class="card card bg-dark text-white">
+                            <div class="card-header">
+                                <div class="step-progress">
+                                    <div class="step" [class.active]="currentStep === 1">
+                                        <div class="step-number">1</div>
+                                    </div>
+                                    <div class="step" [class.active]="currentStep === 2">
+                                        <div class="step-number">2</div>
+                                    </div>
+                                    <div class="step" [class.active]="currentStep === 3">
+                                        <div class="step-number">3</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Step 1 -->
+                                <div *ngIf="currentStep === 1">
+                                    <h3>Personal Information</h3>
+                                    <div class="row">
+                                        <form [formGroup]="form" (ngSubmit)="submit()">
+                                            <div class="form-group">
+                                                <div class="col-md-6">
+                                                    <label class="pb-2" for="phone">Phone :</label>
+                                                    <input type="text" class="form-control" formcControlName="phone">
+                                                </div>
+                                                <div class="col-md-6 pt-2">
+                                                    <label class="pb-2" for="state">State :</label>
+                                                    <select formControlName="state" class="form-control"
+                                                        (change)="selectState($event)">
+                                                        <option disabled>Select State</option>
+                                                        <option>{{states[0]}}</option>
+                                                        <option *ngFor="let state of states">{{state}}</option>
+                                                    </select>
+                                                </div>
+                                                <div *ngIf="state && districts.length > 0" class="col-md-6 pt-3">
+                                                    <label class="pb-2" for="district">Select a District in {{ state
+                                                        }} :</label>
+                                                    <select fromControlName="district" class="form-control"
+                                                        (change)="selectDistrict($event)">
+                                                        <option disabled>{{districts[0]}}</option>
+                                                        <option *ngFor="let district of districts">{{
+                                                            district }}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 pt-2">
+                                                    <label class="pb-2" for="pin">Pin Code :</label>
+                                                    <input type="text" class="form-control" formcControlName="pincode">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 pt-2">
+                                                <button type="submit" class="btn btn-primary" (click)="nextStep()">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Step 2 -->
+                                <div *ngIf="currentStep === 2">
+                                    <h3>Step 2: Contact Information</h3>
+                                    <form>
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="prevStep()">Previous</button>
+                                        <button type="submit" class="btn btn-primary">Next</button>
+                                    </form>
+                                </div>
+
+                                <!-- Step 3 -->
+                                <div *ngIf="currentStep === 3">
+                                    <h3>Step 3: Additional Information</h3>
+                                    <form>
+                                        <button type="button" class="btn btn-secondary"
+                                            (click)="prevStep()">Previous</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

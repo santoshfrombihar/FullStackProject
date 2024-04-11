@@ -1,0 +1,24 @@
+.step-progress {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .step {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: lightgray;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+  }
+  
+  .step.active {
+    background-color: dodgerblue;
+  }
+  
+  .step-number {
+    color: white;
+  }
+  

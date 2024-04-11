@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserserviceService } from '../userservice.service';
-import { userModel } from 'src/app/Models/userModel';
+import { loginModel, userModel } from 'src/app/Models/userModel';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,8 +18,12 @@ export class LoginComponent implements OnInit {
   isInvalidEmail: boolean = false;
   isPasswordNotMatched: boolean = false;
   validatationMessage: string = '';
+  isRegisterSucess: boolean = false;
+  isLoginFailed: boolean = false;
+  loginSuceessMessage: string = 'You have sucessfully registered';
+  loginFailedMessage: string = 'Incorrect Email or Password'
 
-  constructor(private service: UserserviceService) {
+  constructor(private service: UserserviceService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -28,9 +33,11 @@ export class LoginComponent implements OnInit {
   formChangeClicked(clickedText: string) {
     if (clickedText == 'signup') {
       this.isSignUpClicked = true;
+      this.isRegisterSucess = false;
     }
     else {
       this.isSignUpClicked = false;
+      this.isLoginFailed = false;
     }
   }
 
@@ -42,9 +49,37 @@ export class LoginComponent implements OnInit {
         password: form.value.password
       };
       this.service.signupUser(user).subscribe(data => {
+        if (data) {
+          console.log(data);
+          this.isSignUpClicked = false;
+          this.isRegisterSucess = true;
+        }
       })
     }
   }
+
+  login(form: NgForm) {
+    if (this.validateData(form)) {
+      const loginDetails: loginModel = {
+        email: form.value.email,
+        password: form.value.password
+      }
+      this.service.loginUser(loginDetails).subscribe(
+        (data: any) => {
+          if (data.token && data) {
+            localStorage.setItem('token',data.token);
+            this.router.navigate(['deskboard']);
+          }
+        },
+        (error) => {
+          if (error.status == 401) {
+            this.isLoginFailed = true;
+          }
+        }
+      )
+    }
+  }
+
 
   validateData(form: any) {
     const emailRegex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -62,9 +97,11 @@ export class LoginComponent implements OnInit {
       this.isInvalidPassword = true;
       this.validatationMessage = 'Password should have max 6 digit and should contain capital latter, special symbol'
     }
-    if (form.value.password != form.value.password2) {
-      this.isPasswordNotMatched = true;
-      this.validatationMessage = 'Password not matched'
+    if (form.value.password2 != null) {
+      if (form.value.password != form.value.password2) {
+        this.isPasswordNotMatched = true;
+        this.validatationMessage = 'Password not matched'
+      }
     }
     if (this.isInvalidEmail || this.isInvalidName || this.isInvalidPassword || this.isPasswordNotMatched) {
       this.isInvalidEmail = false;
